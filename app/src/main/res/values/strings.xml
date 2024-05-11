@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">InstaBridgePurchase</string>
+    <string name="data">Data</string>
+    <string name="wifi">WiFi</string>
+    <string name="menu">Menu</string>
+    <string name="add_data">Add Data</string>
+    <string name="amplify_your_connectivity">Amplify your connectivity</string>
+    <string name="D_hrs">%1$d hrs</string>
+    <string name="music">Music</string>
+    <string name="internet">Internet</string>
+    <string name="video">Video</string>
+</resources>
