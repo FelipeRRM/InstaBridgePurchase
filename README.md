@@ -11,6 +11,7 @@ The other screens in the bottom navgation bar are merely placeholders.
 The app was implemented entirely using the newest best practices and guidelines for Android as of May 2024:
 * Kotlin was used in every single class in the project
 * Jetpack Compose was used for a high-performance, declarative-ui implementation
+* Navigation component was used to handle navigation in the project
 * MVVM was the architectural pattern used
 * Flow was the technology choice to asynchronously process streams of data and make them observable
 
