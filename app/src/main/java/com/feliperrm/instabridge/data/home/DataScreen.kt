@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -78,9 +79,10 @@ fun DataScreen(navController: NavController) {
 private fun DataScreen(screenState: DataScreenState, actions: DataScreenActions? = null, navController: NavController? = null) {
     when (screenState) {
         is DataScreenState.SelectData -> {
-
+            // Compose bug, after exiting this screen and coming back, the sheet can be hidden. There is a workaround: https://issuetracker.google.com/issues/292138966
+            val scaffoldState = rememberBottomSheetScaffoldState(rememberStandardBottomSheetState(skipHiddenState = true))
             BottomSheetScaffold(
-                scaffoldState = rememberBottomSheetScaffoldState(rememberStandardBottomSheetState(skipHiddenState = true)),
+                scaffoldState = scaffoldState,
                 sheetContainerColor = Color.Black,
                 sheetPeekHeight = 200.dp,
                 sheetContent = {
@@ -99,7 +101,7 @@ private fun DataScreen(screenState: DataScreenState, actions: DataScreenActions?
                             .padding(all = 16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(text = stringResource(id = R.string.add_data), style = MaterialTheme.typography.titleLarge)
+                        Text(text = stringResource(id = R.string.add_data), style = MaterialTheme.typography.titleLarge, color = Color.Black)
                         Spacer(modifier = Modifier.weight(1f))
                         Button(
                             colors = ButtonDefaults.buttonColors().copy(containerColor = Color.White, contentColor = Purple40),
@@ -131,8 +133,8 @@ private fun DataScreen(screenState: DataScreenState, actions: DataScreenActions?
                         )
 
                         Column(modifier = Modifier.align(Alignment.Center), horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(text = screenState.selectedValue.formatWithOneDecimal(), style = MaterialTheme.typography.displayLarge, fontWeight = FontWeight.Bold)
-                            Text(text = "GB", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                            Text(text = screenState.selectedValue.formatWithOneDecimal(), style = MaterialTheme.typography.displayLarge, fontWeight = FontWeight.Bold, color = Color.Black)
+                            Text(text = "GB", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = Color.Black)
                         }
                     }
 
@@ -143,7 +145,8 @@ private fun DataScreen(screenState: DataScreenState, actions: DataScreenActions?
                         text = stringResource(id = R.string.amplify_your_connectivity),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.headlineLarge,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
                     )
 
                     Row(
@@ -161,6 +164,15 @@ private fun DataScreen(screenState: DataScreenState, actions: DataScreenActions?
                         TimeText(time = stringResource(id = R.string.D_hrs, screenState.videoHours), activity = stringResource(id = R.string.video))
                     }
 
+
+                    Spacer(modifier = Modifier.weight(1f))
+                    // Trick to prevent purple from appearing when flinging the bottom bar
+                    Spacer(
+                        modifier = Modifier
+                            .height(80.dp)
+                            .fillMaxWidth()
+                            .background(Color.Black)
+                    )
 
                 }
             }
