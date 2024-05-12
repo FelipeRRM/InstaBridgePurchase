@@ -69,7 +69,6 @@ fun CircularProgressBar(
 
     LaunchedEffect(key1 = selection) {
         if(isEditing){
-            println("Is Editing!")
             angle = selection * 360 - 90f
             last = selection * 360
             appliedAngle = selection * 360
@@ -81,7 +80,6 @@ fun CircularProgressBar(
                 last = this.value * 360
                 appliedAngle = this.value * 360
             }
-            println("NOT editing")
         }
 
     }

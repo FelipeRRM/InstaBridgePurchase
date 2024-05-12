@@ -9,4 +9,11 @@
     <string name="music">Music</string>
     <string name="internet">Internet</string>
     <string name="video">Video</string>
+    <string name="network">Network</string>
+    <string name="plan_type">Plan type</string>
+    <string name="data_only">Data only</string>
+    <string name="str_continue">Continue</string>
+    <string name="select_locations">Select locations</string>
+    <string name="search_locations">Search locations</string>
+    <string name="finish">Finish</string>
 </resources>

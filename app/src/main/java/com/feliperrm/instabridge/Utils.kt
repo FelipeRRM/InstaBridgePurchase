@@ -1,5 +1,7 @@
 package com.feliperrm.instabridge
 
+import java.util.Locale
+
 
 fun <T> List<T>.findClosestIndexNotAbove(target: T): Int where T : Number, T : Comparable<T> {
     var closestIndex = -1
@@ -47,3 +49,17 @@ fun <T> subtract(a: T, b: T): T where T : Number, T : Comparable<T> {
 }
 
 fun Float.formatWithOneDecimal() = "%.1f".format(this).removeSuffix(".0").removeSuffix(",0")
+
+fun countryCodeToEmojiFlag(countryCode: String): String {
+    return countryCode
+        .uppercase(Locale.US)
+        .map { char ->
+            Character.codePointAt("$char", 0) - 0x41 + 0x1F1E6
+        }
+        .map { codePoint ->
+            Character.toChars(codePoint)
+        }
+        .joinToString(separator = "") { charArray ->
+            String(charArray)
+        }
+}

@@ -6,25 +6,20 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.StringRes
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CloudDownload
-import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Diamond
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -43,9 +38,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.feliperrm.instabridge.data.DataScreen
+import com.feliperrm.instabridge.data.countries.CountriesListScreen
+import com.feliperrm.instabridge.data.home.DataScreen
+import com.feliperrm.instabridge.data.success.SuccessScreen
 import com.feliperrm.instabridge.ui.theme.InstaBridgePurchaseTheme
-import com.feliperrm.instabridge.ui.theme.Purple80
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,13 +53,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-sealed class Screen(val route: String, @StringRes val resourceId: Int, val iconVector: ImageVector) {
-    data object Data : Screen("data", R.string.data, Icons.Filled.CloudDownload)
-    data object Wifi : Screen("wifi", R.string.wifi, Icons.Filled.Wifi)
-    data object Menu : Screen("menu", R.string.menu, Icons.Filled.Menu)
-}
-
-private val screens = listOf(
+private val bottomBarScreens = listOf(
     Screen.Data,
     Screen.Wifi,
     Screen.Menu
@@ -79,6 +69,8 @@ fun MainScreenWithBottomBar() {
         ) { innerPadding ->
             NavHost(navController, startDestination = Screen.Data.route, Modifier.padding(innerPadding)) {
                 composable(Screen.Data.route) { DataScreen(navController = navController) }
+                composable(Screen.CountriesList.route) { CountriesListScreen(navController = navController) }
+                composable(Screen.Success.route) { SuccessScreen(navController = navController) }
                 composable(Screen.Wifi.route) { Text(text = "Wifi screen will be here") }
                 composable(Screen.Menu.route) { Text(text = "Menu screen will be here") }
             }
@@ -95,7 +87,7 @@ private fun BottomNavigation(navController: NavController) {
         containerColor = Color.Black
     ) {
         val currentDestination = navBackStackEntry?.destination
-        screens.forEach { screen ->
+        bottomBarScreens.forEach { screen ->
             val isSelected = currentDestination?.hierarchy?.any { it.route == screen.route } == true
             NavigationBarItem(
                 icon = {
@@ -105,8 +97,8 @@ private fun BottomNavigation(navController: NavController) {
                             targetValue = if (isSelected) Color.White else Color.Gray,
                             animationSpec = spring(stiffness = Spring.StiffnessLow)
                         )
-                        Icon(screen.iconVector, tint = color, contentDescription = null)
-                        Text(stringResource(screen.resourceId), color = color)
+                        Icon(screen.iconVector ?: Icons.Filled.Diamond, tint = color, contentDescription = null)
+                        Text(screen.resourceId?.let { stringResource(screen.resourceId) } ?: "", color = color)
                     }
                 },
                 label = {
