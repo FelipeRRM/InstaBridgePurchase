@@ -28,8 +28,8 @@ class DataScreenViewModel : ViewModel() {
     private val _dataHomeScreenState = MutableStateFlow(
         DataScreenState.SelectData(
             selectedCountry = Country("Sweden", "SE"),
-            selectedValue = 5.2f,
-            selectedPercentage = 0.1f,
+            selectedValue = 5f,
+            selectedPercentage = 0.0f,
             listOfShortCuts = listOf(5f, 10f, 15f, 20f),
             internetHours = 30,
             musicHours = 15,
