@@ -17,3 +17,5 @@ The app was implemented entirely using the newest best practices and guidelines 
 A big fofcus was put into making smooth animations that enhance the user experience.
 There are many things to improve in this prototype, but doing so was out of scope.
 
+https://github.com/FelipeRRM/InstaBridgePurchase/assets/10159615/22b12f64-1db9-41de-a834-c15d4e58a578
+
